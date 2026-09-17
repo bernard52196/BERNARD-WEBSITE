@@ -213,16 +213,20 @@
         <div class="contact-card">
           <h3>Let's build something together</h3>
           <p>Have a project in mind or just want to say hello? My inbox is always open.</p>
-          <a href="mailto:ndagijimanabernard@11gmail.com" class="btn btn-primary">ndagijimanabernard@11gmail.com</a>
+          <a href="mailto:ndagijimanabernard11@gmail.com" class="btn btn-primary">ndagijimanabernard11@gmail.com</a>
           <p class="contact-note">Prefer email? The button above opens your email app. Or fill in the form below.</p>
         </div>
-        <form class="contact-form" onsubmit="sendMail(event); return false;">
+        <form class="contact-form" action="https://formsubmit.co/ndagijimanabernard11@gmail.com" method="POST">
           <h3 class="form-title">Send a message</h3>
+          <input type="hidden" name="_subject" value="New message from your portfolio" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value="https://bernard52196.github.io/BERNARD-WEBSITE/thanks.html" />
           <input type="text" name="name" placeholder="Your name" required />
           <input type="email" name="email" placeholder="Your email" required />
           <textarea name="message" rows="4" placeholder="Your message" required></textarea>
           <button type="submit" class="btn btn-ghost">Send Message</button>
-          <p class="form-note">This opens your email app with the message pre-filled.</p>
+          <p class="form-note">Sent securely — it will land straight in my inbox.</p>
         </form>
       </div>
     </div>
@@ -231,17 +235,6 @@
   <footer class="footer">
     <p>© 2026 N. Bernard. Built with HTML &amp; CSS 🚀</p>
   </footer>
-
-  <script>
-    function sendMail(event) {
-      var name = event.target.name.value.trim();
-      var email = event.target.email.value.trim();
-      var message = event.target.message.value.trim();
-      var subject = encodeURIComponent("Portfolio message from " + name);
-      var body = encodeURIComponent(name + " (" + email + ")\n\n" + message);
-      window.location.href = "mailto:ndagijimanabernard@11gmail.com?subject=" + subject + "&body=" + body;
-    }
-  </script>
 
 </body>
 </html>
