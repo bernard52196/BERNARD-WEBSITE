@@ -723,6 +723,15 @@ button {
   margin-bottom: 24px;
 }
 
+.contact-card .btn {
+  word-break: break-all;
+}
+
+.contact-note {
+  font-size: 0.9rem;
+  margin-top: 16px;
+}
+
 .contact-form {
   background: var(--card);
   border: 1px solid var(--card-border);
@@ -756,6 +765,17 @@ button {
   border: none;
   cursor: pointer;
   align-self: flex-start;
+}
+
+.form-title {
+  margin-bottom: 4px;
+  font-size: 1.15rem;
+}
+
+.form-note {
+  color: var(--muted);
+  font-size: 0.85rem;
+  text-align: center;
 }
 
 /* ============ Footer ============ */
