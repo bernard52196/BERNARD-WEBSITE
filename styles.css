@@ -645,6 +645,14 @@ button {
   text-decoration: none;
   font-size: 0.9rem;
   font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.project-link .link-icon {
+  width: 16px;
+  height: 16px;
 }
 
 .project-link:hover {
@@ -688,6 +696,11 @@ button {
 .timeline-item:nth-child(2) .timeline-dot {
   background: var(--accent-2);
   box-shadow: 0 0 14px var(--accent-2);
+}
+
+.timeline-item:nth-child(3) .timeline-dot {
+  background: #fac80a;
+  box-shadow: 0 0 14px #fac80a;
 }
 
 .timeline-date {
