@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Agriculture System — N. Bernard</title>
+  <link rel="stylesheet" href="../styles.css" />
+  <style>
+    .project-detail {
+      min-height: 100vh;
+      padding: 120px 24px 60px;
+    }
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: start;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .detail-visual {
+      height: 400px;
+      border-radius: var(--radius);
+      background: radial-gradient(circle at 60% 40%, #1a5c3a, #05060f);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .detail-visual::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.1'/%3E%3C/svg%3E");
+    }
+    .leaf-icon {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(135deg, #22d3ee, #00a561);
+      border-radius: 50% 0 50% 50%;
+      transform: rotate(-45deg);
+      box-shadow: 0 0 60px rgba(34, 211, 238, 0.5);
+      animation: sway 3s ease-in-out infinite;
+    }
+    @keyframes sway {
+      0%, 100% { transform: rotate(-45deg) scale(1); }
+      50% { transform: rotate(-40deg) scale(1.05); }
+    }
+    .detail-content h1 {
+      font-size: clamp(2rem, 5vw, 3rem);
+      margin-bottom: 16px;
+      background: linear-gradient(90deg, var(--text), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .detail-meta {
+      display: flex;
+      gap: 24px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    .meta-item strong { color: var(--text); }
+    .detail-desc {
+      color: var(--muted);
+      font-size: 1.1rem;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+    .tech-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 32px;
+    }
+    .tech-tag {
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(34, 211, 238, 0.15);
+      color: var(--accent-2);
+      border: 1px solid rgba(34, 211, 238, 0.3);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .detail-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .detail-actions .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .features {
+      margin-top: 48px;
+    }
+    .features h2 {
+      font-size: 1.5rem;
+      margin-bottom: 24px;
+      color: var(--accent-2);
+    }
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 16px;
+    }
+    .feature-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: transform 0.2s, border-color 0.2s;
+    }
+    .feature-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-2);
+    }
+    .feature-card h3 {
+      margin-bottom: 8px;
+      color: var(--text);
+    }
+    .feature-card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+    @media (max-width: 768px) {
+      .detail-grid {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+      .detail-visual {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="twinkling" aria-hidden="true"></div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <span class="flag-badge" aria-hidden="true"><span class="sun"></span></span>
+        <span class="logo-name">N. Bernard</span><span class="logo-dot">.</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" />
+      <label for="nav-toggle" class="nav-hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+      <ul class="nav-links">
+        <li><a href="../index.html#projects">← Back to Portfolio</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <main class="project-detail">
+    <div class="detail-grid">
+      <div class="detail-visual">
+        <div class="leaf-icon"></div>
+      </div>
+      <div class="detail-content">
+        <h1>Smart Agriculture System</h1>
+        <div class="detail-meta">
+          <div class="meta-item"><strong>Status:</strong> In Development</div>
+          <div class="meta-item"><strong>Role:</strong> Full-Stack Developer</div>
+          <div class="meta-item"><strong>Timeline:</strong> 2025 — Present</div>
+        </div>
+        <p class="detail-desc">
+          An IoT-based smart farming solution that monitors soil moisture, temperature, and humidity using sensors to automate irrigation and provide real-time crop health analytics for farmers. The system uses Arduino-based sensor nodes communicating via MQTT to a Python backend, with a web dashboard for visualization and control.
+        </p>
+        <div class="tech-stack">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Arduino/C++</span>
+          <span class="tech-tag">MQTT</span>
+          <span class="tech-tag">IoT</span>
+          <span class="tech-tag">Flask/Django</span>
+          <span class="tech-tag">JavaScript</span>
+          <span class="tech-tag">Chart.js</span>
+          <span class="tech-tag">SQLite/PostgreSQL</span>
+        </div>
+        <div class="detail-actions">
+          <a href="https://github.com/bernard52196/Smart-Agriculture-System" class="btn btn-primary" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27s1.36.09 2 .27c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>
+            View on GitHub
+          </a>
+          <a href="../index.html" class="btn btn-ghost">← Back to Portfolio</a>
+        </div>
+      </div>
+    </div>
+
+    <section class="features">
+      <div class="container">
+        <h2>Key Features</h2>
+        <div class="features-grid">
+          <article class="feature-card">
+            <h3>Real-time Monitoring</h3>
+            <p>Live sensor data for soil moisture, temperature, and humidity updated every few seconds via MQTT protocol.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Automated Irrigation</h3>
+            <p>Smart watering schedules based on soil conditions and weather forecasts to optimize water usage.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Crop Health Analytics</h3>
+            <p>Data visualization and trend analysis to identify patterns and predict crop health issues early.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Mobile-friendly Dashboard</h3>
+            <p>Responsive web interface accessible from any device for remote farm monitoring and control.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Alert System</h3>
+            <p>SMS/email notifications when sensor readings exceed thresholds or system issues are detected.</p>
+          </article>
+          <article class="feature-card">
+            <h3>Historical Data</h3>
+            <p>Long-term data storage and export capabilities for seasonal analysis and reporting.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© 2026 N. Bernard. Built with HTML & CSS 🚀</p>
+  </footer>
+</body>
+</html>
