@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Dashboard — N. Bernard Portfolio</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../assets/css/chatbot.css" />
+  <style>
+    .admin-page {
+      min-height: 100vh;
+      padding: 120px 24px 60px;
+    }
+    .admin-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 32px;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+    .admin-header h1 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .admin-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 24px;
+      margin-bottom: 32px;
+    }
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 24px;
+      text-align: center;
+    }
+    .stat-card h3 {
+      font-size: 2.5rem;
+      color: var(--accent-2);
+      margin-bottom: 8px;
+    }
+    .stat-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .admin-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .admin-table th,
+    .admin-table td {
+      padding: 12px 16px;
+      text-align: left;
+      border-bottom: 1px solid var(--card-border);
+    }
+    .admin-table th {
+      background: rgba(124, 92, 255, 0.1);
+      color: var(--accent);
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+    .admin-table td {
+      color: var(--text);
+      font-size: 0.9rem;
+    }
+    .admin-table tr:last-child td {
+      border-bottom: none;
+    }
+    .admin-table tr:hover td {
+      background: rgba(255, 255, 255, 0.02);
+    }
+    .role-badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .role-badge.admin {
+      background: rgba(124, 92, 255, 0.2);
+      color: var(--accent);
+    }
+    .role-badge.user {
+      background: rgba(34, 211, 238, 0.2);
+      color: var(--accent-2);
+    }
+    .btn-logout {
+      padding: 10px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--card-border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover {
+      border-color: #ff6b6b;
+      color: #ff6b6b;
+    }
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="twinkling" aria-hidden="true"></div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <span class="flag-badge" aria-hidden="true"><span class="sun"></span></span>
+        <span class="logo-name">N. Bernard</span><span class="logo-dot">.</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" />
+      <label for="nav-toggle" class="nav-hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="admin-page">
+    <div class="container">
+      <div class="admin-header">
+        <h1>Admin Dashboard</h1>
+        <button class="btn-logout" onclick="logout()">Logout</button>
+      </div>
+
+      <div class="admin-stats">
+        <div class="stat-card">
+          <h3 id="totalUsers">0</h3>
+          <p>Total Users</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalAdmins">0</h3>
+          <p>Admins</p>
+        </div>
+        <div class="stat-card">
+          <h3 id="totalRegular">0</h3>
+          <p>Regular Users</p>
+        </div>
+      </div>
+
+      <h2 style="margin-bottom: 16px; color: var(--accent-2);">Registered Users</h2>
+      <table class="admin-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody id="usersTable">
+          <tr>
+            <td colspan="3" class="empty-state">No users registered yet.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 N. Bernard. Built with HTML & CSS 🚀</p>
+  </footer>
+
+  <script src="../assets/js/chatbot.js"></script>
+  <script>
+    // Check if user is logged in and is admin
+    const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    if (!currentUser || currentUser.role !== 'admin') {
+      window.location.href = 'login.html';
+    }
+
+    function logout() {
+      localStorage.removeItem('currentUser');
+      window.location.href = 'login.html';
+    }
+
+    function loadUsers() {
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      const table = document.getElementById('usersTable');
+      
+      document.getElementById('totalUsers').textContent = users.length;
+      document.getElementById('totalAdmins').textContent = users.filter(u => u.role === 'admin').length;
+      document.getElementById('totalRegular').textContent = users.filter(u => u.role === 'user').length;
+
+      if (users.length === 0) {
+        table.innerHTML = '<tr><td colspan="3" class="empty-state">No users registered yet.</td></tr>';
+        return;
+      }
+
+      table.innerHTML = users.map(u => `
+        <tr>
+          <td>${u.name}</td>
+          <td>${u.email}</td>
+          <td><span class="role-badge ${u.role}">${u.role}</span></td>
+        </tr>
+      `).join('');
+    }
+
+    loadUsers();
+  </script>
+</body>
+</html>

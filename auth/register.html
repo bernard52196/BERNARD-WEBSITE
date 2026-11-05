@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Register — N. Bernard Portfolio</title>
+  <link rel="stylesheet" href="../css/styles.css" />
+  <link rel="stylesheet" href="../assets/css/chatbot.css" />
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 60px;
+    }
+    .auth-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 40px;
+      width: 100%;
+      max-width: 420px;
+      backdrop-filter: blur(12px);
+    }
+    .auth-card h1 {
+      font-size: 1.8rem;
+      margin-bottom: 8px;
+      background: linear-gradient(90deg, var(--text), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .auth-card .subtitle {
+      color: var(--muted);
+      margin-bottom: 32px;
+      font-size: 0.95rem;
+    }
+    .auth-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .auth-form input {
+      padding: 14px 16px;
+      border-radius: 10px;
+      border: 1px solid var(--card-border);
+      background: rgba(255, 255, 255, 0.04);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .auth-form input:focus {
+      border-color: var(--accent);
+    }
+    .auth-form .btn {
+      width: 100%;
+      text-align: center;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .auth-form .btn-primary {
+      padding: 14px 28px;
+    }
+    .auth-links {
+      text-align: center;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+    .auth-links a {
+      color: var(--accent-2);
+      text-decoration: none;
+    }
+    .auth-links a:hover {
+      text-decoration: underline;
+    }
+    .auth-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 16px 0;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+    .auth-divider::before,
+    .auth-divider::after {
+      content: "";
+      flex: 1;
+      height: 1px;
+      background: var(--card-border);
+    }
+    .error-msg {
+      color: #ff6b6b;
+      font-size: 0.85rem;
+      display: none;
+    }
+    .success-msg {
+      color: #51cf66;
+      font-size: 0.85rem;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="stars" aria-hidden="true"></div>
+  <div class="twinkling" aria-hidden="true"></div>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <a href="../index.html" class="logo">
+        <span class="flag-badge" aria-hidden="true"><span class="sun"></span></span>
+        <span class="logo-name">N. Bernard</span><span class="logo-dot">.</span>
+      </a>
+      <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation" />
+      <label for="nav-toggle" class="nav-hamburger" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </label>
+      <ul class="nav-links">
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="../index.html#projects">Projects</a></li>
+        <li><a href="../index.html#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <div class="auth-page">
+    <div class="auth-card">
+      <h1>Create Account</h1>
+      <p class="subtitle">Sign up to get started</p>
+
+      <form class="auth-form" id="registerForm">
+        <input type="text" id="regName" placeholder="Full name" required />
+        <input type="email" id="regEmail" placeholder="Email address" required />
+        <input type="password" id="regPassword" placeholder="Password" required />
+        <input type="password" id="regConfirm" placeholder="Confirm password" required />
+        <p class="error-msg" id="regError"></p>
+        <p class="success-msg" id="regSuccess"></p>
+        <button type="submit" class="btn btn-primary">Create Account</button>
+      </form>
+
+      <div class="auth-divider">or</div>
+
+      <div class="auth-links">
+        <p>Already have an account? <a href="login.html">Sign in</a></p>
+        <p><a href="../index.html">← Back to Portfolio</a></p>
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p>© 2026 N. Bernard. Built with HTML & CSS 🚀</p>
+  </footer>
+
+  <script src="../assets/js/chatbot.js"></script>
+  <script>
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('regName').value;
+      const email = document.getElementById('regEmail').value;
+      const password = document.getElementById('regPassword').value;
+      const confirm = document.getElementById('regConfirm').value;
+      const errorEl = document.getElementById('regError');
+      const successEl = document.getElementById('regSuccess');
+
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      if (password !== confirm) {
+        errorEl.textContent = 'Passwords do not match.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      if (password.length < 6) {
+        errorEl.textContent = 'Password must be at least 6 characters.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find(u => u.email === email)) {
+        errorEl.textContent = 'An account with this email already exists.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      users.push({ name, email, password, role: 'user' });
+      localStorage.setItem('users', JSON.stringify(users));
+
+      successEl.textContent = 'Account created successfully! Redirecting to login...';
+      successEl.style.display = 'block';
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 1500);
+    });
+  </script>
+</body>
+</html>
