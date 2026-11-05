@@ -994,7 +994,84 @@ button {
   }
 }
 
-/* ============ Reduced motion ============ */
+/* ============ Scroll-to-Top Button ============ */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 100px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--card);
+  border: 1px solid var(--card-border);
+  color: var(--text);
+  cursor: pointer;
+  z-index: 9997;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.3s, transform 0.3s, background 0.2s, border-color 0.2s;
+  pointer-events: none;
+}
+
+.scroll-top-btn.visible {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+}
+
+.scroll-top-btn:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.scroll-top-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ============ Scroll Reveal Animation ============ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger children */
+.project-card.reveal:nth-child(1) { transition-delay: 0s; }
+.project-card.reveal:nth-child(2) { transition-delay: 0.1s; }
+.project-card.reveal:nth-child(3) { transition-delay: 0.2s; }
+.project-card.reveal:nth-child(4) { transition-delay: 0.3s; }
+.project-card.reveal:nth-child(5) { transition-delay: 0.4s; }
+
+.skill-card.reveal:nth-child(1) { transition-delay: 0s; }
+.skill-card.reveal:nth-child(2) { transition-delay: 0.1s; }
+.skill-card.reveal:nth-child(3) { transition-delay: 0.2s; }
+
+.feature-card.reveal:nth-child(1) { transition-delay: 0s; }
+.feature-card.reveal:nth-child(2) { transition-delay: 0.1s; }
+.feature-card.reveal:nth-child(3) { transition-delay: 0.2s; }
+.feature-card.reveal:nth-child(4) { transition-delay: 0.3s; }
+.feature-card.reveal:nth-child(5) { transition-delay: 0.4s; }
+.feature-card.reveal:nth-child(6) { transition-delay: 0.5s; }
+
+/* ============ Mobile Responsive for Scroll-to-Top ============ */
+@media (max-width: 480px) {
+  .scroll-top-btn {
+    bottom: 80px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
