@@ -866,7 +866,7 @@ button {
   }
 
   .nav-toggle:checked ~ .nav-links {
-    max-height: 340px;
+    max-height: 420px;
     visibility: visible;
   }
 
