@@ -1084,7 +1084,8 @@ button {
     animation: none !important;
     transition: none !important;
   }
-}/* ============ Nav Login/Register Buttons ============ */
+}
+/* ============ Nav Login/Register Buttons ============ */
 .nav-login,
 .nav-register {
   padding: 8px 16px;
