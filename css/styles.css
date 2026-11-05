@@ -199,8 +199,9 @@ button {
 .nav-links {
   list-style: none;
   display: flex;
-  gap: 28px;
+  gap: 16px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .nav-links a {
