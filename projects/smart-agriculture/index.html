@@ -158,7 +158,10 @@
         <span></span><span></span><span></span>
       </label>
       <ul class="nav-links">
-        <li><a href="../index.html#projects">← Back to Portfolio</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#features">Features</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a href="../index.html#projects">← Portfolio</a></li>
       </ul>
     </div>
   </nav>
@@ -198,7 +201,26 @@
       </div>
     </div>
 
-    <section class="features">
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-number">01</span>
+          <h2 class="section-title">About This Project</h2>
+        </div>
+        <div class="about-grid">
+          <div class="about-card">
+            <p>
+              The Smart Agriculture System is designed to help farmers monitor and manage their crops more efficiently using modern IoT technology. By combining low-cost Arduino sensors with a Python backend, the system provides real-time insights into soil conditions and automates irrigation to reduce water waste.
+            </p>
+            <p>
+              This project aims to make precision agriculture accessible to small-scale farmers, helping them increase crop yields while reducing resource consumption.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features" class="features">
       <div class="container">
         <h2>Key Features</h2>
         <div class="features-grid">
@@ -226,6 +248,33 @@
             <h3>Historical Data</h3>
             <p>Long-term data storage and export capabilities for seasonal analysis and reporting.</p>
           </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-number">03</span>
+          <h2 class="section-title">Contact</h2>
+        </div>
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3>Let's build something together</h3>
+            <p>Have a project in mind or just want to say hello? My inbox is always open.</p>
+            <a href="mailto:ndagijimanabernard11@gmail.com" class="btn btn-primary">ndagijimanabernard11@gmail.com</a>
+            <p class="contact-note">Prefer email? The button above opens your email app. Or fill in the form below.</p>
+          </div>
+          <form class="contact-form" action="https://formspree.io/f/ndagijimanabernard11@gmail.com" method="POST">
+            <h3 class="form-title">Send a message</h3>
+            <input type="hidden" name="_subject" value="New message from Smart Agriculture project" />
+            <input type="hidden" name="_next" value="thanks.html" />
+            <input type="text" name="name" placeholder="Your name" required />
+            <input type="email" name="email" placeholder="Your email" required />
+            <textarea name="message" rows="4" placeholder="Your message" required></textarea>
+            <button type="submit" class="btn btn-ghost">Send Message</button>
+            <p class="form-note">Sent securely — it will land straight in my inbox.</p>
+          </form>
         </div>
       </div>
     </section>
