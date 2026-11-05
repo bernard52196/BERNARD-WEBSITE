@@ -132,13 +132,48 @@
       color: var(--muted);
       font-size: 0.95rem;
     }
+    .about-grid {
+      display: grid;
+      grid-template-columns: minmax(220px, 0.8fr) 1.2fr;
+      gap: 32px;
+      align-items: center;
+    }
+    .about-photo {
+      border-radius: var(--radius);
+      border: 1px solid var(--card-border);
+      padding: 12px;
+      background: var(--card);
+      transition: transform 0.25s, border-color 0.25s;
+    }
+    .about-photo:hover {
+      transform: translateY(-4px);
+      border-color: var(--accent-2);
+    }
+    .about-photo img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: calc(var(--radius) - 8px);
+      aspect-ratio: 4 / 5;
+      filter: saturate(0.9);
+    }
+    .about-card {
+      background: var(--card);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+    .about-card p {
+      color: var(--muted);
+    }
+    .about-card p + p {
+      margin-top: 16px;
+    }
     @media (max-width: 768px) {
-      .detail-grid {
+      .about-grid {
         grid-template-columns: 1fr;
-        gap: 32px;
-      }
-      .detail-visual {
-        height: 300px;
+        gap: 24px;
       }
     }
   </style>
@@ -208,6 +243,9 @@
           <h2 class="section-title">About This Project</h2>
         </div>
         <div class="about-grid">
+          <div class="about-photo">
+            <img src="../../assets/images/smart-agri-bg.jpg" alt="Smart Agriculture System" />
+          </div>
           <div class="about-card">
             <p>
               The Smart Agriculture System is designed to help farmers monitor and manage their crops more efficiently using modern IoT technology. By combining low-cost Arduino sensors with a Python backend, the system provides real-time insights into soil conditions and automates irrigation to reduce water waste.
