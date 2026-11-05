@@ -11,7 +11,7 @@
 CREATE TABLE IF NOT EXISTS users (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
+    email VARCHAR(191) NOT NULL UNIQUE,
     password_hash VARCHAR(255) NOT NULL,
     role ENUM('user', 'admin') NOT NULL DEFAULT 'user',
     avatar_url VARCHAR(500) DEFAULT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS contact_messages (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(100) NOT NULL,
-    email VARCHAR(255) NOT NULL,
+    email VARCHAR(191) NOT NULL,
     subject VARCHAR(255) DEFAULT 'New message from portfolio',
     message TEXT NOT NULL,
     is_read BOOLEAN DEFAULT FALSE,
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS contact_messages (
 CREATE TABLE IF NOT EXISTS projects (
     id INT AUTO_INCREMENT PRIMARY KEY,
     title VARCHAR(200) NOT NULL,
-    slug VARCHAR(200) NOT NULL UNIQUE,
+    slug VARCHAR(191) NOT NULL UNIQUE,
     description TEXT NOT NULL,
     long_description TEXT DEFAULT NULL,
     tech_stack VARCHAR(500) DEFAULT NULL,
@@ -109,7 +109,7 @@ CREATE TABLE IF NOT EXISTS site_settings (
 CREATE TABLE IF NOT EXISTS sessions (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT NOT NULL,
-    token VARCHAR(255) NOT NULL UNIQUE,
+    token VARCHAR(191) NOT NULL UNIQUE,
     ip_address VARCHAR(45) DEFAULT NULL,
     user_agent VARCHAR(500) DEFAULT NULL,
     expires_at TIMESTAMP NOT NULL,
