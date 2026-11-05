@@ -153,7 +153,7 @@
       <h1>Welcome Back</h1>
       <p class="subtitle">Sign in to your account</p>
 
-      <div class="role-selector">
+      <div class="role-selector" style="display: none;">
         <button class="role-btn active" data-role="user" onclick="selectRole('user')">User</button>
         <button class="role-btn" data-role="admin" onclick="selectRole('admin')">Admin</button>
       </div>
@@ -203,14 +203,14 @@
 
       // Demo authentication (localStorage-based)
       const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const user = users.find(u => u.email === email && u.password === password && u.role === selectedRole);
+      const user = users.find(u => u.email === email && u.password === password);
 
       if (user) {
         localStorage.setItem('currentUser', JSON.stringify(user));
         successEl.textContent = 'Login successful! Redirecting...';
         successEl.style.display = 'block';
         setTimeout(() => {
-          if (selectedRole === 'admin') {
+          if (user.role === 'admin') {
             window.location.href = 'admin.html';
           } else {
             window.location.href = '../index.html';

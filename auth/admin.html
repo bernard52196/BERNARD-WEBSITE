@@ -156,6 +156,18 @@
         </div>
       </div>
 
+      <h2 style="margin-bottom: 16px; color: var(--accent-2);">Create Admin Account</h2>
+      <div class="auth-card" style="max-width: 600px; margin-bottom: 32px;">
+        <form class="auth-form" id="createAdminForm">
+          <input type="text" id="adminName" placeholder="Admin name" required />
+          <input type="email" id="adminEmail" placeholder="Admin email" required />
+          <input type="password" id="adminPassword" placeholder="Password" required />
+          <p class="error-msg" id="adminError"></p>
+          <p class="success-msg" id="adminSuccess"></p>
+          <button type="submit" class="btn btn-primary">Create Admin</button>
+        </form>
+      </div>
+
       <h2 style="margin-bottom: 16px; color: var(--accent-2);">Registered Users</h2>
       <table class="admin-table">
         <thead>
@@ -213,6 +225,33 @@
         </tr>
       `).join('');
     }
+
+    document.getElementById('createAdminForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById('adminName').value;
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+      const errorEl = document.getElementById('adminError');
+      const successEl = document.getElementById('adminSuccess');
+
+      errorEl.style.display = 'none';
+      successEl.style.display = 'none';
+
+      const users = JSON.parse(localStorage.getItem('users') || '[]');
+      if (users.find(u => u.email === email)) {
+        errorEl.textContent = 'An account with this email already exists.';
+        errorEl.style.display = 'block';
+        return;
+      }
+
+      users.push({ name, email, password, role: 'admin' });
+      localStorage.setItem('users', JSON.stringify(users));
+
+      successEl.textContent = 'Admin account created successfully!';
+      successEl.style.display = 'block';
+      document.getElementById('createAdminForm').reset();
+      loadUsers();
+    });
 
     loadUsers();
   </script>
