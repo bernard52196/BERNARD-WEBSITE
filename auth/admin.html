@@ -193,40 +193,77 @@
   <script src="../assets/js/chatbot.js"></script>
   <script src="../assets/js/main.js"></script>
   <script>
+    // Backend API URL - update this to your PHP server URL
+    const API_URL = 'http://localhost/backend';
+
     // Check if user is logged in and is admin
     const currentUser = JSON.parse(localStorage.getItem('currentUser') || 'null');
+    const authToken = localStorage.getItem('authToken');
     if (!currentUser || currentUser.role !== 'admin') {
       window.location.href = 'login.html';
     }
 
     function logout() {
+      if (authToken) {
+        fetch(API_URL + '/logout.php', {
+          method: 'POST',
+          headers: { 'Authorization': 'Bearer ' + authToken }
+        }).catch(() => {});
+      }
       localStorage.removeItem('currentUser');
+      localStorage.removeItem('authToken');
       window.location.href = 'login.html';
     }
 
-    function loadUsers() {
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      const table = document.getElementById('usersTable');
-      
-      document.getElementById('totalUsers').textContent = users.length;
-      document.getElementById('totalAdmins').textContent = users.filter(u => u.role === 'admin').length;
-      document.getElementById('totalRegular').textContent = users.filter(u => u.role === 'user').length;
+    async function loadUsers() {
+      try {
+        const response = await fetch(API_URL + '/users.php', {
+          headers: { 'Authorization': 'Bearer ' + authToken }
+        });
+        const data = await response.json();
 
-      if (users.length === 0) {
-        table.innerHTML = '<tr><td colspan="3" class="empty-state">No users registered yet.</td></tr>';
-        return;
+        if (response.ok && data.users) {
+          const users = data.users;
+          document.getElementById('totalUsers').textContent = users.length;
+          document.getElementById('totalAdmins').textContent = users.filter(u => u.role === 'admin').length;
+          document.getElementById('totalRegular').textContent = users.filter(u => u.role === 'user').length;
+
+          if (users.length === 0) {
+            document.getElementById('usersTable').innerHTML = '<tr><td colspan="3" class="empty-state">No users registered yet.</td></tr>';
+            return;
+          }
+
+          document.getElementById('usersTable').innerHTML = users.map(u => `
+            <tr>
+              <td>${u.name}</td>
+              <td>${u.email}</td>
+              <td><span class="role-badge ${u.role}">${u.role}</span></td>
+            </tr>
+          `).join('');
+        }
+      } catch (err) {
+        // Fallback to localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        document.getElementById('totalUsers').textContent = users.length;
+        document.getElementById('totalAdmins').textContent = users.filter(u => u.role === 'admin').length;
+        document.getElementById('totalRegular').textContent = users.filter(u => u.role === 'user').length;
+
+        if (users.length === 0) {
+          document.getElementById('usersTable').innerHTML = '<tr><td colspan="3" class="empty-state">No users registered yet.</td></tr>';
+          return;
+        }
+
+        document.getElementById('usersTable').innerHTML = users.map(u => `
+          <tr>
+            <td>${u.name}</td>
+            <td>${u.email}</td>
+            <td><span class="role-badge ${u.role}">${u.role}</span></td>
+          </tr>
+        `).join('');
       }
-
-      table.innerHTML = users.map(u => `
-        <tr>
-          <td>${u.name}</td>
-          <td>${u.email}</td>
-          <td><span class="role-badge ${u.role}">${u.role}</span></td>
-        </tr>
-      `).join('');
     }
 
-    document.getElementById('createAdminForm').addEventListener('submit', function(e) {
+    document.getElementById('createAdminForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const name = document.getElementById('adminName').value;
       const email = document.getElementById('adminEmail').value;
@@ -237,20 +274,41 @@
       errorEl.style.display = 'none';
       successEl.style.display = 'none';
 
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      if (users.find(u => u.email === email)) {
-        errorEl.textContent = 'An account with this email already exists.';
-        errorEl.style.display = 'block';
-        return;
+      try {
+        const response = await fetch(API_URL + '/create-admin.php', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + authToken
+          },
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successEl.textContent = 'Admin account created successfully!';
+          successEl.style.display = 'block';
+          document.getElementById('createAdminForm').reset();
+          loadUsers();
+        } else {
+          errorEl.textContent = data.error || 'Failed to create admin account.';
+          errorEl.style.display = 'block';
+        }
+      } catch (err) {
+        // Fallback to localStorage
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        if (users.find(u => u.email === email)) {
+          errorEl.textContent = 'An account with this email already exists.';
+          errorEl.style.display = 'block';
+          return;
+        }
+        users.push({ name, email, password, role: 'admin' });
+        localStorage.setItem('users', JSON.stringify(users));
+        successEl.textContent = 'Admin account created successfully!';
+        successEl.style.display = 'block';
+        document.getElementById('createAdminForm').reset();
+        loadUsers();
       }
-
-      users.push({ name, email, password, role: 'admin' });
-      localStorage.setItem('users', JSON.stringify(users));
-
-      successEl.textContent = 'Admin account created successfully!';
-      successEl.style.display = 'block';
-      document.getElementById('createAdminForm').reset();
-      loadUsers();
     });
 
     loadUsers();

@@ -159,7 +159,10 @@
   <script src="../assets/js/chatbot.js"></script>
   <script src="../assets/js/main.js"></script>
   <script>
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
+    // Backend API URL - update this to your PHP server URL
+    const API_URL = 'http://localhost/backend';
+
+    document.getElementById('registerForm').addEventListener('submit', async function(e) {
       e.preventDefault();
       const name = document.getElementById('regName').value;
       const email = document.getElementById('regEmail').value;
@@ -183,21 +186,40 @@
         return;
       }
 
-      const users = JSON.parse(localStorage.getItem('users') || '[]');
-      if (users.find(u => u.email === email)) {
-        errorEl.textContent = 'An account with this email already exists.';
-        errorEl.style.display = 'block';
-        return;
+      try {
+        const response = await fetch(API_URL + '/register.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name, email, password })
+        });
+        const data = await response.json();
+
+        if (response.ok && data.success) {
+          successEl.textContent = 'Account created successfully! Redirecting to login...';
+          successEl.style.display = 'block';
+          setTimeout(() => {
+            window.location.href = 'login.html';
+          }, 1500);
+        } else {
+          errorEl.textContent = data.error || 'Registration failed. Please try again.';
+          errorEl.style.display = 'block';
+        }
+      } catch (err) {
+        // Fallback to localStorage if backend is unavailable
+        const users = JSON.parse(localStorage.getItem('users') || '[]');
+        if (users.find(u => u.email === email)) {
+          errorEl.textContent = 'An account with this email already exists.';
+          errorEl.style.display = 'block';
+          return;
+        }
+        users.push({ name, email, password, role: 'user' });
+        localStorage.setItem('users', JSON.stringify(users));
+        successEl.textContent = 'Account created successfully! Redirecting to login...';
+        successEl.style.display = 'block';
+        setTimeout(() => {
+          window.location.href = 'login.html';
+        }, 1500);
       }
-
-      users.push({ name, email, password, role: 'user' });
-      localStorage.setItem('users', JSON.stringify(users));
-
-      successEl.textContent = 'Account created successfully! Redirecting to login...';
-      successEl.style.display = 'block';
-      setTimeout(() => {
-        window.location.href = 'login.html';
-      }, 1500);
     });
   </script>
 </body>
